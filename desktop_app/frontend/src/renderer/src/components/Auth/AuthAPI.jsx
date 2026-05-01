@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = "http://localhost:8000/api/v1";
 
 export async function sendOtp(email) {
     const response = await fetch(`${API_BASE_URL}/send-otp`, {
@@ -20,6 +20,8 @@ export async function verify(email, otp) {
     });
     
     const data = await response.json();
+    console.log("API",data);
+    
     if (!response.ok) throw new Error(data.detail || "Verification failed");
     return data;
 }

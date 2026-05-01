@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useState } from 'react';
 import bgImg from '../../media/bgImg.png';
 import Sidebar from '../Sidebar/Sidebar';
 import Result from '../Result/Result';
-import AuthHome from '../Auth/AuthHome';
 import AuthHome from '../Auth/AuthHome';
 
 function Home() {

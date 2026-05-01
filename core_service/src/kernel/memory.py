@@ -2,8 +2,16 @@ import sqlite3
 import json
 from datetime import datetime
 from typing import Optional, Dict, Any
+import os
+import sys
 
-DB_PATH = "ai_os_core.db"
+USER_HOME = os.path.expanduser("~")
+APP_DIR = os.path.join(USER_HOME, ".ai_os")
+
+if not os.path.exists(APP_DIR):
+    os.makedirs(APP_DIR)
+
+DB_PATH = os.path.join(APP_DIR, "ai_os_core.db")
 
 class MemoryManager:
     def __init__(self):

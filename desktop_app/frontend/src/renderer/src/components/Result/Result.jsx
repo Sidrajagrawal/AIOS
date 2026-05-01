@@ -4,7 +4,6 @@ import ShowAgents from './ShowAgents.jsx';
 import ArchitectAgent from '../Agents/ArchitectAgent.jsx';
 import FocusAgent from '../Agents/FocusAgent.jsx';
 import CodeCheaterAgent from '../Agents/CodeCheaterAgent.jsx';
-import CodeCheaterAgent from '../Agents/CodeCheaterAgent.jsx';
 import Prompt from "../Prompt/Prompt";
 
 function Result({ agentData }) {

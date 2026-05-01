@@ -5,3 +5,6 @@ Workflow/
 ai_os_core.db
 problem_temp.png
 replace.txt
+ai-os-backend.spec
+dist
+build

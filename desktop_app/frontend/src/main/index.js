@@ -1,15 +1,54 @@
 import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
-import { join } from 'path'
+import { join, dirname } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { exec } from 'child_process'
+import { exec, spawn, execSync } from 'child_process' 
 import os from 'os'
 import fs from 'fs'
 
 app.disableHardwareAcceleration()
 
+let backendProcess = null;
+
+function startFastAPI() {
+  const backendPath = app.isPackaged 
+    ? join(process.resourcesPath, 'ai-os-backend', 'ai-os-backend.exe')
+    : join(app.getAppPath(), 'resources', 'ai-os-backend', 'ai-os-backend.exe');
+
+  const backendDir = dirname(backendPath);
+
+  try {
+    // --- FIX 1: Added windowsHide so it doesn't crash in production ---
+    backendProcess = spawn(backendPath, [], { 
+        cwd: backendDir,
+        windowsHide: true 
+    });
+
+    backendProcess.stdout.on('data', (data) => {
+      console.log(`[FastAPI]: ${data}`);
+    });
+
+    // Treat stderr as a normal log, since Uvicorn puts success messages here
+    backendProcess.stderr.on('data', (data) => {
+      console.log(`[FastAPI Log]: ${data}`); 
+    });
+
+    backendProcess.on('error', (err) => {
+       dialog.showErrorBox("Backend Failed to Start", `Path: ${backendPath}\nError: ${err.message}`);
+    });
+
+    backendProcess.on('exit', (code) => {
+       if (code !== 0 && code !== null) {
+           dialog.showErrorBox("Backend Crashed", `FastAPI exited with code ${code}. Check if port 8000 is in use.`);
+       }
+    });
+
+  } catch (err) {
+    dialog.showErrorBox("Spawn Error", err.message);
+  }
+}
+
 function createWindow() {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     show: false,
     autoHideMenuBar: true,
@@ -22,6 +61,8 @@ function createWindow() {
 
   mainWindow.maximize()
 
+  mainWindow.webContents.openDevTools()
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
@@ -31,8 +72,6 @@ function createWindow() {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
@@ -40,21 +79,17 @@ function createWindow() {
   }
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
 app.whenReady().then(() => {
-  // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
-  // Default open or close DevTools by F12 in development
+  startFastAPI();
+
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
-  // Our IPC handler for native folder selection
   ipcMain.handle('select-directory', async () => {
     const { canceled, filePaths } = await dialog.showOpenDialog({
       properties: ['openDirectory']
@@ -62,21 +97,16 @@ app.whenReady().then(() => {
     if (canceled) {
       return null
     } else {
-      return filePaths[0] // Returns the absolute path string
+      return filePaths[0] 
     }
   })
 
-  // NEW: IPC handler for executing commands in an external terminal
   ipcMain.handle('execute-in-terminal', async (event, payload) => {
-    // Destructure the new subDirectory property
     const { commands, targetDirectory, subDirectory = '' } = payload;
-
-    // Determine the final path
     let finalPath = targetDirectory;
 
     if (subDirectory && subDirectory !== 'root') {
       finalPath = join(targetDirectory, subDirectory);
-      // Create the folder if it does not exist
       if (!fs.existsSync(finalPath)) {
         fs.mkdirSync(finalPath, { recursive: true });
       }
@@ -89,7 +119,6 @@ app.whenReady().then(() => {
       let cmdString = '';
 
       if (platform === 'win32') {
-        // Change drive/dir to the finalPath
         cmdString = `start cmd /k "cd /d ${finalPath} && ${chainedCommands}"`;
       } else if (platform === 'darwin') {
         cmdString = `osascript -e 'tell app "Terminal" to do script "cd ${finalPath} && ${chainedCommands}"'`;
@@ -108,16 +137,31 @@ app.whenReady().then(() => {
     });
   });
 
-  createWindow()
+  setTimeout(() => {
+    createWindow()
+  }, 1500)
 
   app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-// Quit when all windows are closed, except on macOS.
+// --- FIX 2: CRITICAL cleanup step. Kills the python process tree on Windows ---
+app.on('will-quit', () => {
+  if (backendProcess) {
+    try {
+      if (process.platform === 'win32') {
+        // Force kill the process and all child processes to free Port 8000
+        execSync(`taskkill /pid ${backendProcess.pid} /f /t`);
+      } else {
+        backendProcess.kill();
+      }
+    } catch (e) {
+      console.log("Error killing backend tree:", e);
+    }
+  }
+});
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()

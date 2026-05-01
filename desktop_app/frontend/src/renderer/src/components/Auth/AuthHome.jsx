@@ -34,9 +34,10 @@ function AuthHome({ onVerify, setAgentData }) {
                 setStatusMsg("Verifying credentials...");
 
                 const result = await verify(email, otp);
-
+                console.log(result);
+                
                 if (result.status === "success") {
-                    const fetchedAgents = result.agents?.data || [];
+                    const fetchedAgents = result.agents || [];
                     setAgentData(fetchedAgents);
 
                     localStorage.setItem('isVerified', 'true');

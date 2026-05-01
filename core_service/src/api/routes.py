@@ -2,17 +2,23 @@ import uuid
 import asyncio
 import threading
 import os
+import sys
 import random
 import httpx
 from datetime import datetime, timedelta
 from fastapi import APIRouter, HTTPException
 from dotenv import load_dotenv
-from dotenv import load_dotenv
 from pydantic import BaseModel
 from core_service.src.kernel.orchestrator import Orchestrator, TaskPriority
 from core_service.src.kernel.tools.Developer.cli_tool import execute_cli_command
 
-load_dotenv()
+def get_env_path():
+    if getattr(sys, 'frozen', False):
+        return os.path.join(os.path.dirname(sys.executable), '.env')
+    else:
+        return os.path.join(os.path.dirname(__file__), '../../../../.env')
+
+load_dotenv(get_env_path())
 
 WEB_BACKEND_API = os.getenv('WEB_BACKEND_API')
 
@@ -165,14 +171,15 @@ async def verify_auth_code(request: VerifyRequest):
                     json={"email": email} 
                 )
                 if response.status_code in (200, 201):
-                    assigned_agents = response.json()
+                    full_json = response.json()
+                    assigned_agents = full_json.get("data", [])
 
         except Exception as e:
             print(f"Failed to connect to WEB_BACKEND_API: {e}")
     return {
         "status": "success", 
         "message": "Operator verified",
-        "agents": assigned_agents
+        "agents": assigned_agents,
     }
 
 

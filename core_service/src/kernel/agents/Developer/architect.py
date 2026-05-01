@@ -1,10 +1,15 @@
 import json
 import os
+import sys
 from ...brain import ask_groq
 
 class ArchitectAgent:
     def __init__(self):
-        registry_path = os.path.join(os.path.dirname(__file__), 'data/command_registry.json')
+        if getattr(sys, 'frozen', False):
+            base_dir = sys._MEIPASS
+            registry_path = os.path.join(base_dir, 'core_service', 'src', 'kernel', 'agents', 'Developer', 'data', 'command_registry.json')
+        else:
+            registry_path = os.path.join(os.path.dirname(__file__), 'data', 'command_registry.json')
         try:
             with open(registry_path, 'r') as f:
                 self.command_registry = f.read()

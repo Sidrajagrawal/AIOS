@@ -3,18 +3,15 @@ import { Menu, SquarePen, Search, Bot, Settings, Zap, User } from 'lucide-react'
 import './Sidebar.css';
 
 function Sidebar({ onNewChat }) {
-function Sidebar({ onNewChat }) {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
         <div className={`sidebar-wrap ${collapsed ? 'collapsed' : ''}`}>
-
             <div className="border-top" />
             <div className="border-bottom" />
             <div className="border-right" />
 
             <div className="sidebar-content">
-
                 <div className="sidebar-header">
                     {!collapsed && (
                         <div className="sidebar-logo">
@@ -30,7 +27,7 @@ function Sidebar({ onNewChat }) {
                 <div className="sidebar-divider" />
 
                 <nav className="nav-list">
-                    <div className="nav-item" title="New Chat" onClick={onNewChat} style={{ cursor: 'pointer' }}>
+                    {/* Simplified nested divs here */}
                     <div className="nav-item" title="New Chat" onClick={onNewChat} style={{ cursor: 'pointer' }}>
                         <SquarePen className="nav-icon" />
                         {!collapsed && <span>New Chat</span>}
