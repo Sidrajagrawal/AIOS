@@ -2,8 +2,6 @@ const BASE_API = import.meta.env.VITE_BACKEND_API;
 
 async function AUTHAPI(id_token) {
     try {
-        console.log(BASE_API);
-        
         const res = await fetch(`${BASE_API}/auth/google`, {
             method: "POST",
             headers: {
