@@ -1,0 +1,182 @@
+.architect-container {
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.cyber-panel {
+    box-shadow: 0 0 20px #00fff710, inset 0 0 30px #00000060;
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 247, 0.015) 2px,
+            rgba(0, 255, 247, 0.015) 4px);
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+.tab-watermark {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #00fff720;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.section-title {
+    font-family: 'Orbitron', monospace;
+    color: #4a7fa5;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px dashed rgba(0, 255, 247, 0.2);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+.tech-badge {
+    background: rgba(0, 255, 247, 0.05);
+    border: 1px solid rgba(0, 255, 247, 0.2);
+    color: #a8d8e8;
+    padding: 4px 10px;
+    font-size: 13px;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+    cursor: default;
+}
+
+.tech-badge:hover {
+    background: rgba(0, 255, 247, 0.15);
+    border-color: #00fff7;
+    color: #ffffff;
+    text-shadow: 0 0 5px #00fff7;
+}
+
+.content-panel {
+    animation: fadeSlide 0.25s ease forwards;
+    color: #a8d8e8;
+    text-shadow: 0 0 4px #00fff720;
+    line-height: 1.7;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.corner-tl,
+.corner-tr,
+.corner-bl,
+.corner-br {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+}
+
+.corner-tl {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid #00fff7;
+    border-left: 2px solid #00fff7;
+}
+
+.corner-tr {
+    top: -1px;
+    right: -1px;
+    border-top: 2px solid #00fff7;
+    border-right: 2px solid #00fff7;
+}
+
+.corner-bl {
+    bottom: -1px;
+    left: -1px;
+    border-bottom: 2px solid #00fff7;
+    border-left: 2px solid #00fff7;
+}
+
+.corner-br {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 2px solid #00fff7;
+    border-right: 2px solid #00fff7;
+}
+
+.mermaid-container {
+    width: 100%;
+    overflow: auto;
+    max-height: 600px;
+    align-items: center;
+}
+
+.mermaid-container svg {
+    width: max-content !important;
+    max-width: none !important;
+    max-height: 450px !important;
+    height: auto !important;
+    margin: 0 auto;
+}
+
+.custom-scrollbar::-webkit-scrollbar,
+.mermaid-container::-webkit-scrollbar,
+pre::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track,
+.mermaid-container::-webkit-scrollbar-track,
+pre::-webkit-scrollbar-track {
+    background: #060d18;
+    border-left: 1px dashed rgba(0, 255, 247, 0.2);
+    border-top: 1px dashed rgba(0, 255, 247, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+.mermaid-container::-webkit-scrollbar-thumb,
+pre::-webkit-scrollbar-thumb {
+    /* Industrial hazard stripes in neon cyan */
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(0, 255, 247, 0.1),
+        rgba(0, 255, 247, 0.1) 4px,
+        rgba(0, 255, 247, 0.4) 4px,
+        rgba(0, 255, 247, 0.4) 8px
+    );
+    border: 1px solid #00fff7;
+    border-radius: 0px; /* Sharp edges for cyberpunk feel */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover,
+.mermaid-container::-webkit-scrollbar-thumb:hover,
+pre::-webkit-scrollbar-thumb:hover {
+    background: #00fff7;
+    box-shadow: 0 0 15px #00fff7; /* Neon glow on hover */
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner,
+.mermaid-container::-webkit-scrollbar-corner,
+pre::-webkit-scrollbar-corner {
+    background: #060d18;
+    border-left: 1px solid rgba(0, 255, 247, 0.2);
+    border-top: 1px solid rgba(0, 255, 247, 0.2);
+}

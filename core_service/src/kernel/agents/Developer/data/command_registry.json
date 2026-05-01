@@ -1,0 +1,74 @@
+{
+  "frontend": {
+    "react": {
+      "command": "npx create-vite@latest . --template react",
+      "rules": "Strictly use Vite. NEVER use npx create-react-app.",
+      "core_packages": ["axios", "react-router-dom", "lucide-react", "zustand"],
+      "when_to_use": "For dynamic single-page applications (SPAs) requiring a component-based architecture and a vast ecosystem."
+    },
+    "nextjs": {
+      "command": "npx create-next-app@latest .",
+      "rules": "Use App Router by default. Include Tailwind CSS.",
+      "core_packages": ["lucide-react", "framer-motion"],
+      "when_to_use": "For full-stack React applications requiring Server-Side Rendering (SSR), SEO optimization, or static site generation."
+    },
+    "vue": {
+      "command": "npx create-vite@latest . --template vue",
+      "rules": "Strictly use Vite. Prefer Composition API.",
+      "core_packages": ["vue-router", "pinia", "axios"],
+      "when_to_use": "For lightweight, highly performant web apps where a gentle learning curve and clean template syntax are prioritized."
+    },
+    "angular": {
+      "command": "npx @angular/cli@latest new current-app --directory .",
+      "rules": "Use the Angular CLI. Enforce strict TypeScript.",
+      "core_packages": ["@angular/material", "rxjs"],
+      "when_to_use": "For heavy, enterprise-grade applications that need a strict, opinionated, batteries-included framework."
+    }
+  },
+  "backend": {
+    "express": {
+      "command": "npm init -y",
+      "rules": "Standard Node setup. Ensure modern ES modules or proper CommonJS setup.",
+      "core_packages": ["express", "mongoose", "cors", "dotenv", "helmet"],
+      "when_to_use": "For lightweight, fast, and flexible Node.js REST APIs and microservices."
+    },
+    "fastapi": {
+      "command": "python -m venv venv && venv\\Scripts\\activate && pip install fastapi uvicorn pydantic sqlalchemy",
+      "rules": "Standard Python virtual environment. Enforce type hinting for Pydantic.",
+      "core_packages": ["fastapi", "uvicorn", "pydantic", "sqlalchemy"],
+      "when_to_use": "For high-performance Python APIs requiring asynchronous execution, auto-generated Swagger docs, and tight data validation."
+    },
+    "django": {
+      "command": "python -m venv venv && venv\\Scripts\\activate && pip install django djangorestframework && django-admin startproject core .",
+      "rules": "Standard Python virtual environment. Always include Django REST Framework for APIs.",
+      "core_packages": ["django", "djangorestframework", "psycopg2-binary"],
+      "when_to_use": "For rapid backend development needing a built-in admin panel, ORM, and secure 'batteries-included' architecture."
+    },
+    "springboot": {
+      "command": "curl -G https://start.spring.io/starter.zip -d dependencies=web,data-jpa,postgresql -d type=maven-project -o project.zip && tar -xf project.zip && del project.zip",
+      "rules": "Use Spring Initializr via cURL. Ensure Maven wrapper is used.",
+      "core_packages": ["spring-boot-starter-web", "spring-boot-starter-data-jpa"],
+      "when_to_use": "For large-scale, robust, and highly secure enterprise applications relying on the Java/JVM ecosystem."
+    }
+  },
+  "ai_ml": {
+    "pytorch": {
+      "command": "python -m venv venv && venv\\Scripts\\activate && pip install torch torchvision torchaudio numpy pandas",
+      "rules": "Standard Python virtual environment. Ensure GPU/CUDA instructions are noted if applicable.",
+      "core_packages": ["torch", "torchvision", "torchaudio", "numpy", "pandas"],
+      "when_to_use": "For research-heavy AI, dynamic computation graphs, custom model architectures, and deep learning."
+    },
+    "tensorflow": {
+      "command": "python -m venv venv && venv\\Scripts\\activate && pip install tensorflow keras numpy matplotlib",
+      "rules": "Standard Python virtual environment. Prefer Keras API within TensorFlow.",
+      "core_packages": ["tensorflow", "keras", "numpy", "matplotlib"],
+      "when_to_use": "For production-ready deep learning models, mobile deployment, and large-scale neural networks."
+    },
+    "scikit_learn": {
+      "command": "python -m venv venv && venv\\Scripts\\activate && pip install scikit-learn pandas numpy seaborn jupyter",
+      "rules": "Standard Python virtual environment. Focus on data pipeline structures.",
+      "core_packages": ["scikit-learn", "pandas", "numpy", "seaborn", "jupyter"],
+      "when_to_use": "For traditional machine learning tasks like regression, classification, clustering, and data preprocessing on tabular data."
+    }
+  }
+}

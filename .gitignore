@@ -1,0 +1,7 @@
+myenv/
+Workflow/
+# //
+.env
+ai_os_core.db
+problem_temp.png
+replace.txt

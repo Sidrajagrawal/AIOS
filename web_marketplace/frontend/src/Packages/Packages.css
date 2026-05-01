@@ -1,0 +1,115 @@
+
+.packages-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070');
+  background-size: cover;
+  background-position: center;
+  background-color: #111; /* Fallback */
+}
+
+.red-tint-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50vw; 
+  height: 100vh;
+  background: linear-gradient(to right, rgba(20, 0, 0, 0) 0%, rgba(200, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.kite-card {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: rgba(25, 25, 30, 0.85);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.kite-card:hover {
+  transform: scale(1.1);
+  background: rgba(200, 30, 30, 0.9); /* Slight red glow on hover */
+  border-color: rgba(255, 100, 100, 0.8);
+}
+
+.kite-content {
+  text-align: center;
+  color: white;
+  width: 60%;
+}
+
+.kite-content h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  color: white;
+  width: 500px;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 50, 50, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  position: relative;
+  transform: scale(0.8);
+  animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #ff4444;
+}
+
+.features-list {
+  margin-top: 20px;
+  padding-left: 20px;
+  color: #aaa;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes popUp {
+  to { transform: scale(1); }
+}
