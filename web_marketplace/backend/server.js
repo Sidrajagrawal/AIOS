@@ -12,10 +12,7 @@ connectDB(MONGO_URL);
 
 app.use(express.json());
 app.use(cors({
-    origin: [
-        'http://localhost:5173',
-        'https://your-azure-frontend-url.azurewebsites.net'
-    ],
+    origin: true,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 }))
