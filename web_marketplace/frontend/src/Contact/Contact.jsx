@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar';
-import bgImage from '../media/NewBg.png';
 import { motion } from 'framer-motion';
 
 export default function Contact() {
@@ -22,7 +21,7 @@ export default function Contact() {
   return (
     <div 
       className="relative min-h-screen w-full bg-cover bg-center bg-fixed bg-[#0a0a0a]"
-      style={{ backgroundImage: `url(${bgImage})` }} 
+      style={{ backgroundImage: `url(${import.meta.env.VITE_NEW_BG})` }} 
     >
       <div className="absolute inset-0 bg-black/60 z-0 pointer-events-none"></div>
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-r from-transparent to-[#FF5A06]/10 z-0 pointer-events-none"></div>
