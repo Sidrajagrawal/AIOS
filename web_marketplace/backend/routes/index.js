@@ -1,7 +1,7 @@
 import express from "express";
 import authRoute from "./auth.js";
 import adminRoute from './admin.js'
-import agentRoute from "./Agent.js";
+import agentRoute from "./agent.js";
 
 const router = express.Router();
 
