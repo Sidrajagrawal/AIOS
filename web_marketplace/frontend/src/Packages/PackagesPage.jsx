@@ -18,8 +18,7 @@ export default function PackagesPage() {
 
         if (res && res.success) {
           const agents = res.data;
-
-          // 🔥 Group agents by category
+          
           const grouped = Object.values(
             agents.reduce((acc, agent) => {
               if (!acc[agent.categoryTitle]) {

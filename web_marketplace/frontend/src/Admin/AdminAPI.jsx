@@ -9,7 +9,6 @@ export async function TotalUser() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                // 2. Attach it to the Authorization header
                 "Authorization": `Bearer ${token}`
             }
         });
@@ -56,7 +55,6 @@ export async function AddAgentByRole(formData) {
 export async function GetAllAgents() {
     try {
         const token = localStorage.getItem("token");
-
         const res = await fetch(`${BASE_API}/admin/showAllAgents`, {
             method: "GET",
             headers: {
@@ -66,7 +64,7 @@ export async function GetAllAgents() {
         });
 
         const data = await res.json();
-
+        
         if (!res.ok) {
             throw new Error(data.message || "Failed to fetch agents");
         }
